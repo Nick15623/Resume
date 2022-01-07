@@ -554,37 +554,7 @@ namespace Backend.Coinbase
             return response;
         }
         #endregion
-
-        // Reports Apis
-        #region Reports
-        //public async Task<MethodResponse<IEnumerable<Fee>>> GetFees()
-        //{
-        //    var response = new MethodResponse<IEnumerable<Fee>>();
-        //    using (var api = new ApiClient())
-        //    {
-        //        var uri = new Uri(CoinbaseUrls.Url[CoinbaseUrl.GetFees]);
-        //        var headers = _Helper.GetHeaders(_ApiCredentials, DateTime.Now, ApiRequestType.GET.ToString(), uri.AbsolutePath);
-        //        response = await api.GetAsync<IEnumerable<Fee>>(uri.ToString(), headers);
-        //    }
-        //    return response;
-        //}
-        #endregion
-
-        // Users Apis
-        #region Users
-        //public async Task<MethodResponse<IEnumerable<Fee>>> GetFees()
-        //{
-        //    var response = new MethodResponse<IEnumerable<Fee>>();
-        //    using (var api = new ApiClient())
-        //    {
-        //        var uri = new Uri(CoinbaseUrls.Url[CoinbaseUrl.GetFees]);
-        //        var headers = _Helper.GetHeaders(_ApiCredentials, DateTime.Now, ApiRequestType.GET.ToString(), uri.AbsolutePath);
-        //        response = await api.GetAsync<IEnumerable<Fee>>(uri.ToString(), headers);
-        //    }
-        //    return response;
-        //}
-        #endregion
-
+        
         public IExternalCredentials GetCredentials()
         {
             var credentialsHelper = new CredentialsHelper();
