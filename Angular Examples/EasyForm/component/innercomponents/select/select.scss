@@ -1,0 +1,10 @@
+
+.invalid {
+  border-color: #dc3545;
+}
+
+.form-label {
+  font-weight: 500 !important; /* overwrite bootstrap stuff */
+  margin-bottom: 0 !important; /* overwrite bootstrap stuff */
+  font-size: 0.85em;
+}

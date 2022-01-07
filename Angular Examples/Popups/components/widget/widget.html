@@ -1,0 +1,29 @@
+
+<div *ngIf="Config">
+
+  <div class="widget-cntr {{ getLocationClass() }}" [class.intro-animation]="ShowIntro" [class.outro-animation]="ShowOutro">
+    <div class="{{ getSizeClass() }}" [class.hidden]="!IsOpen">
+      <div class="card {{ getMaxThemeClass() }} shadow-lg" [class.maximize]="ShowMax" [class.minimize]="ShowMin">
+        <div class="card-header" [class.hidden]="ShowMin">
+          <div class="d-flex align-items-center">
+            <button class="btn btn-close ms-auto" (click)="onMinimize()"></button>
+          </div>
+        </div>
+        <div class="card-body" [class.hidden]="ShowMin">
+          <div #CustomComponent *ngIf="Config?.Component"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card card-mini {{ getMinThemeClass() }} shadow-lg" [class.hidden]="IsOpen" (click)="onMaximize()">
+      <div class="card-body p-0">
+        <div *ngIf="Config?.Icon"><i class="{{ Config.Icon }}"></i></div>
+      </div>
+    </div>
+
+    <button *ngIf="!IsOpen" class="btn btn-close btn-mini" (click)="onClose()"></button>
+  </div>
+</div>
+
+
+

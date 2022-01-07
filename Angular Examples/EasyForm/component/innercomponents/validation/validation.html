@@ -1,0 +1,18 @@
+
+<small *ngIf="Control?.invalid && (Control?.dirty || Control?.touched)" class="text-danger">
+  <span *ngIf="Control.errors?.required">
+    {{ getValidationMessage("required") }}
+  </span>
+  <span *ngIf="Control.errors?.email">
+    {{ getValidationMessage("email") }}
+  </span>
+  <span *ngIf="Control.errors?.pattern">
+    {{ getValidationMessage("pattern") }}
+  </span>
+  <span *ngIf="Control.errors?.minlength">
+    {{ getValidationMessage("minlength") }}
+  </span>
+  <span *ngIf="Control.errors?.maxlength">
+    {{ getValidationMessage("maxlength") }}
+  </span>
+</small>

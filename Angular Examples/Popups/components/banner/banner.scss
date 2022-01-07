@@ -1,0 +1,114 @@
+
+.banner-top {
+  top: 0;
+}
+.banner-bottom {
+  bottom: 0;
+}
+.banner-cntr {
+  display: flex;
+  justify-content: center;
+  z-index: 97;
+  position: fixed;
+  left: 0;
+  right: 0;
+
+  .card {
+    z-index: 100;
+    width: 100%;
+    border-radius: 0;
+  }
+}
+
+.hidden {
+  display: none !important;
+}
+
+.intro-animation {
+  opacity: 1;
+  animation-name: intro;
+  animation-duration: 250ms;
+
+  @keyframes intro {
+    0% {
+      opacity: 0;
+    }
+
+    100% {
+      opacity: 1;
+    }
+  }
+}
+.outro-animation {
+  opacity: 0;
+  animation-name: outro;
+  animation-duration: 250ms;
+
+  @keyframes outro {
+    0% {
+      opacity: 1;
+    }
+
+    100% {
+      opacity: 0;
+    }
+  }
+}
+
+// Alignments
+.banner-content-left {
+  display: flex;
+  align-items: center;
+}
+.banner-content-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.banner-content-right {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+.banner-content-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+// Colors
+.banner-fuzzy {
+  color: #000;
+  background-color: rgba(0,0,0,0.125);
+  border: none;
+}
+.banner-success {
+  color: #fff;
+  background-color: #198754;
+  border-color: #198754;
+}
+.banner-warning {
+  color: #000;
+  background-color: #ffc107;
+  border-color: #ffc107;
+}
+.banner-danger {
+  color: #fff;
+  background-color: #dc3545;
+  border-color: #dc3545;
+}
+.banner-primary {
+  color: #fff;
+  background-color: #007bff;
+  border-color: #007bff;
+}
+.banner-secondary {
+  color: #fff;
+  background-color: #6c757d;
+  border-color: #6c757d;
+}
+.banner-info {
+  color: #000;
+  background-color: #0dcaf0;
+  border-color: #0dcaf0;
+}

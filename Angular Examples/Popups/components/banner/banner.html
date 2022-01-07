@@ -1,0 +1,19 @@
+
+<div *ngIf="Config">
+  <div class="banner-cntr {{ getLocationClass() }}" [class.intro-animation]="ShowIntro" [class.outro-animation]="ShowOutro">
+    <div class="card {{ getThemeClass() }}">
+
+      <div class="card-body {{ getAlignmentClass() }}">
+        <div #CustomComponent *ngIf="Config?.Component"></div>
+        <div *ngIf="Config?.Message">{{ Config.Message }}</div>
+        <div *ngFor="let button of Config.Buttons">
+          <button class="btn {{ getButtonThemeClass(button) }} ms-2 me-2" (click)="onClick(button)">{{ button.ButtonText }}</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+</div>
+
+
+

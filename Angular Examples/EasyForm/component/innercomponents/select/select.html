@@ -1,0 +1,29 @@
+
+<label *ngIf="RowGroup?.Label" for="{{ Id }}" class="form-label">{{ RowGroup.Label }}</label>
+<select *ngIf="SelectElement"
+    id="{{ Id }}"
+    class="form-select"
+    placeholder="{{ (Control?.Placeholder ? Control.Placeholder : '') }}"
+    [class.invalid]="Control?.invalid && (Control?.dirty || Control?.touched)"
+
+    [value]="SelectElement?.Value ? SelectElement.Value : ''"
+    [title]="SelectElement?.Title ? SelectElement.Title : ''"
+
+    [attr.name]="SelectElement.Name"
+    [attr.disabled]="SelectElement?.Disabled"
+    [attr.readonly]="SelectElement?.Readonly"
+
+    [formControl]="Control"
+
+    (change)="changed()"
+    (blur)="changed()"
+  >
+  <option *ngIf="SelectElement?.Placeholder" disabled>{{ SelectElement.Placeholder }}</option>
+  <option *ngFor="let opt of SelectElement.SelectOptions"
+          [value]="opt.key">
+    {{ opt.value }}
+  </option>
+
+</select>
+<easy-validation [Validators]="RowGroup?.Validators" [Control]="Control"></easy-validation>
+

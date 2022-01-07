@@ -1,0 +1,98 @@
+
+.dark-overlay {
+  position: fixed;
+  z-index: 98;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0,0,0,0.55);
+}
+
+.click-overlay {
+  position: fixed;
+  z-index: 99;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.modal-cntr {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 97;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+
+  .card {
+    z-index: 100;
+  }
+}
+
+.intro-animation {
+  opacity: 1;
+  animation-name: intro;
+  animation-duration: 250ms;
+
+  @keyframes intro {
+    0% {
+      opacity: 0;
+    }
+
+    100% {
+      opacity: 1;
+    }
+  }
+}
+.outro-animation {
+  top: 0;
+  opacity: 0;
+  animation-name: outro;
+  animation-duration: 250ms;
+
+  @keyframes outro {
+    0% {
+      opacity: 1;
+    }
+
+    100% {
+      opacity: 0;
+    }
+  }
+}
+
+// Modal Sizes
+.modal-xsm {
+  width: 15%;
+  max-height: 25%;
+}
+
+.modal-sm {
+  width: 20%;
+  max-height: 30%;
+}
+
+.modal-md {
+  width: 30%;
+  max-height: 45%;
+}
+
+.modal-lg {
+  width: 50%;
+  max-height: 65%;
+}
+
+.modal-xlg {
+  width: 70%;
+  max-height: 80%;
+}
+
+.modal-fullscreen {
+  width: 100%;
+  height: 100%;
+}

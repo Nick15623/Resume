@@ -1,0 +1,88 @@
+
+.toast-cntr {
+  display: flex;
+  justify-content: center;
+  z-index: 97;
+  position: fixed;
+  top: 10%;
+  left: 0;
+  right: 0;
+
+  .card {
+    z-index: 1000;
+  }
+}
+
+.intro-animation {
+  top: 10%;
+  opacity: 1;
+  animation-name: intro;
+  animation-duration: 400ms;
+
+  @keyframes intro {
+    0% {
+      top: 0;
+      opacity: 0;
+    }
+
+    100% {
+      top: 10%;
+      opacity: 1;
+    }
+  }
+}
+.outro-animation {
+  top: 0;
+  opacity: 0;
+  animation-name: outro;
+  animation-duration: 400ms;
+
+  @keyframes outro {
+    0% {
+      top: 10%;
+      opacity: 1;
+    }
+
+    100% {
+      top: 0;
+      opacity: 0;
+    }
+  }
+}
+
+// Colors
+.toast-success {
+  color: #fff;
+  background-color: #198754;
+  border-color: #198754;
+}
+
+.toast-warning {
+  color: #000;
+  background-color: #ffc107;
+  border-color: #ffc107;
+}
+
+.toast-danger {
+  color: #fff;
+  background-color: #dc3545;
+  border-color: #dc3545;
+}
+
+.toast-primary {
+  color: #fff;
+  background-color: #007bff;
+  border-color: #007bff;
+}
+
+.toast-secondary {
+  color: #fff;
+  background-color: #6c757d;
+  border-color: #6c757d;
+}
+
+.toast-info {
+  color: #000;
+  background-color: #0dcaf0;
+  border-color: #0dcaf0;
+}

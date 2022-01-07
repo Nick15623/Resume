@@ -1,0 +1,36 @@
+
+.form-btns-cntr {
+  display: flex;
+  align-items: center;
+}
+
+.form-btn-left {
+  justify-content: flex-start;
+}
+
+.form-btn-center {
+  justify-content: center;
+}
+
+.form-btn-right {
+  justify-content: flex-end;
+}
+
+.form-btn-between {
+  justify-content: space-between;
+}
+
+// Custom Scroll Bar
+::-webkit-scrollbar {
+  width: 8px; /* width of the entire scrollbar */
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #818182; /* color of the scroll thumb */
+  border-radius: 20px; /* roundness of the scroll thumb */
+  border: 2px solid rgba(0,0,0,0); /* creates padding around scroll thumb */
+}
+
+::-webkit-scrollbar-track {
+  display: none;
+}

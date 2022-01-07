@@ -1,0 +1,12 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Styles.Render("~/Content/Register")
+
+@Html.AntiForgeryToken()
+<app-user-register allow-error></app-user-register>
+
+@Scripts.Render("~/bundles/Register")
+

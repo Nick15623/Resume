@@ -1,0 +1,236 @@
+
+
+.widget-top-left {
+  top: 0;
+  left: 0;
+
+  .widget-xsm, .widget-sm, .widget-md, .widget-lg, .widget-xlg, .widget-fullscreen, .card-mini {
+    display: flex;
+    flex-direction: column;
+  }
+}
+.widget-top-right {
+  top: 0;
+  right: 0;
+
+  .widget-xsm, .widget-sm, .widget-md, .widget-lg, .widget-xlg, .widget-fullscreen, .card-mini {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+  }
+}
+.widget-bottom-left {
+  bottom: 0;
+  left: 0;
+
+  .widget-xsm, .widget-sm, .widget-md, .widget-lg, .widget-xlg, .widget-fullscreen, .card-mini {
+    display: flex;
+    flex-direction: column-reverse;
+  }
+}
+.widget-bottom-right {
+  bottom: 0;
+  right: 0;
+
+  .widget-xsm, .widget-sm, .widget-md, .widget-lg, .widget-xlg, .widget-fullscreen, .card-mini {
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: flex-end;
+  }
+}
+
+.widget-cntr {
+  display: flex;
+  justify-content: center;
+  z-index: 97;
+  position: fixed;
+  padding: 1rem;
+
+  .card {
+    z-index: 100;
+  }
+
+  .card-mini {
+    cursor: pointer;
+    border-radius: 50%;
+    min-height: 4rem;
+    min-width: 4rem;
+    max-height: 4rem;
+    max-width: 4rem;
+  }
+
+  .btn-mini {
+    display: none;
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 0.25em;
+    height: 0.25em;
+  }
+
+  .maximize {
+    animation-name: maximize;
+    animation-duration: 400ms;
+    border-radius: 0;
+    min-height: 100%;
+    min-width: 100%;
+    max-height: 100%;
+    max-width: 100%;
+
+    @keyframes maximize {
+      from {
+        border-radius: 50%;
+        min-height: 4rem;
+        min-width: 4rem;
+        max-height: 4rem;
+        max-width: 4rem;
+      }
+
+      to {
+        border-radius: 0;
+        min-height: 100%;
+        min-width: 100%;
+        max-height: 100%;
+        max-width: 100%;
+      }
+    }
+  }
+  .minimize {
+    animation-name: minimize;
+    animation-duration: 400ms;
+    border-radius: 50%;
+    min-height: 4rem;
+    min-width: 4rem;
+    max-height: 4rem;
+    max-width: 4rem;
+
+    @keyframes minimize {
+      from {
+        border-radius: 0;
+        min-height: 100%;
+        min-width: 100%;
+        max-height: 100%;
+        max-width: 100%;
+      }
+
+      to {
+        border-radius: 50%;
+        min-height: 4rem;
+        min-width: 4rem;
+        max-height: 4rem;
+        max-width: 4rem;
+      }
+    }
+  }
+
+  &:hover {
+    .btn-mini {
+      display: block;
+    }
+  }
+}
+
+.hidden {
+  display: none !important;
+}
+
+.intro-animation {
+  opacity: 1;
+  animation-name: intro;
+  animation-duration: 250ms;
+
+  @keyframes intro {
+    0% {
+      opacity: 0;
+    }
+
+    100% {
+      opacity: 1;
+    }
+  }
+}
+.outro-animation {
+  opacity: 0;
+  animation-name: outro;
+  animation-duration: 250ms;
+
+  @keyframes outro {
+    0% {
+      opacity: 1;
+    }
+
+    100% {
+      opacity: 0;
+    }
+  }
+}
+
+// Colors
+.widget-success {
+  color: #fff;
+  background-color: #198754;
+  border-color: #198754;
+}
+.widget-warning {
+  color: #000;
+  background-color: #ffc107;
+  border-color: #ffc107;
+}
+.widget-danger {
+  color: #fff;
+  background-color: #dc3545;
+  border-color: #dc3545;
+}
+.widget-primary {
+  color: #fff;
+  background-color: #007bff;
+  border-color: #007bff;
+}
+.widget-secondary {
+  color: #fff;
+  background-color: #6c757d;
+  border-color: #6c757d;
+}
+.widget-info {
+  color: #000;
+  background-color: #0dcaf0;
+  border-color: #0dcaf0;
+}
+
+// Sizes
+.widget-xsm {
+  min-width: 8vw;
+  min-height: 25vh;
+  max-width: 8vw;
+  max-height: 25vh;
+}
+.widget-sm {
+  min-height: 30vh;
+  min-width: 10vw;
+  max-height: 30vh;
+  max-width: 10vw;
+}
+.widget-md {
+  min-height: 40vh;
+  min-width: 20vw;
+  max-height: 40vh;
+  max-width: 20vw;
+}
+.widget-lg {
+  min-height: 65vh;
+  min-width: 30vw;
+  max-height: 65vh;
+  max-width: 30vw;
+}
+.widget-xlg {
+  min-height: 85vh;
+  min-width: 40vw;
+  max-height: 85vh;
+  max-width: 40vw;
+}
+.widget-fullscreen {
+  min-height: Calc(100vh - 2rem);
+  min-width: Calc(100vw - 2rem);
+  max-height: Calc(100vh - 2rem);
+  max-width: Calc(100vw - 2rem);
+}

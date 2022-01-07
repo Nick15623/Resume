@@ -1,0 +1,16 @@
+
+<div *ngIf="Config">
+  <div class="toast-cntr" [class.intro-animation]="ShowIntro" [class.outro-animation]="ShowOutro">
+    <div class="card {{ getThemeClass() }}">
+      <div class="card-body">
+        <div class="d-flex align-items-center">
+          <div *ngIf="Config?.Icon"><i class="{{ Config.Icon }}"></i></div>
+          {{ Config.Message }}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+

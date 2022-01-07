@@ -1,0 +1,23 @@
+
+<label *ngIf="RowGroup?.Label" for="{{ Id }}" class="form-label">{{ RowGroup.Label }}</label>
+<textarea *ngIf="TextareaElement"
+  id="{{ Id }}"
+  class="form-control"
+  placeholder="{{ (TextareaElement?.Placeholder ? TextareaElement.Placeholder : '') }}"
+
+  [class.invalid]="Control?.invalid && (Control?.dirty || Control?.touched)"
+
+  [value]="TextareaElement?.Value ? TextareaElement.Value : ''"
+  [title]="TextareaElement?.Title ? TextareaElement.Title : ''"
+          
+  [attr.name]="TextareaElement.Name"
+  [attr.disabled]="TextareaElement?.Disabled"
+  [attr.readonly]="TextareaElement?.Readonly"
+
+  [formControl]="Control"
+
+  (change)="changed()"
+  (blur)="changed()"
+  (keyup)="changed()"
+></textarea>
+<easy-validation [Validators]="RowGroup?.Validators" [Control]="Control"></easy-validation>

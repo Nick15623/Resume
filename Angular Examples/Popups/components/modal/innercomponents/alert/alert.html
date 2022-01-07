@@ -1,0 +1,15 @@
+
+<div *ngIf="Config.ShowHeader" class="card-header {{ themeClass }}">
+  <h4 class="m-0">{{ Config?.Title ? Config.Title : 'Modal Title' }}</h4>
+  <button title="Close" class="btn btn-close" (click)="close()"></button>
+</div>
+<div class="card-body">
+  <div *ngIf="Config?.Icon"><i class="{{ Config.Icon }}"></i></div>
+  <div *ngIf="Config.CustomMessage">{{ Config?.CustomMessage ? Config.CustomMessage() : (Config?.Message ? Config.Message : 'Modal Message') }}</div>
+  <div *ngIf="!Config.CustomMessage">{{ Config?.Message ? Config.Message : 'Modal Message' }}</div>
+</div>
+<div class="card-footer">
+  <button class="btn w-100 {{ themeBtnClass }}" (click)="close()">
+    {{ Config?.ButtonText ? Config.ButtonText : 'Close' }}
+  </button>
+</div>

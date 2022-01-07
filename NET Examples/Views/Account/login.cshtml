@@ -1,0 +1,20 @@
+﻿@using Schooldesk.Models
+@model LoginPageViewModel 
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Styles.Render("~/Content/Login")
+
+@Html.HiddenFor(m => m.ReturnUrl)
+
+@Html.AntiForgeryToken()
+<app-user-login allow-error></app-user-login>
+<style>
+    body {
+        overflow-x: hidden;
+    }
+</style>
+
+@Scripts.Render("~/bundles/Login")
+

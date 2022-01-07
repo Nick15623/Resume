@@ -1,0 +1,36 @@
+
+
+.invalid {
+  border-color: #dc3545;
+}
+
+.checkbox-cntr {
+  display: flex;
+  align-items: center;
+
+  * {
+    cursor: pointer;
+  }
+
+  label {
+    -ms-user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+  }
+
+  .checkbox-input {
+    position: relative;
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+    margin-bottom: 0;
+  }
+}
+.form-switch {
+  padding-left: inherit;
+}
+
+.form-check-label, .form-label {
+  font-weight: 500 !important; /* overwrite bootstrap stuff */
+  margin-bottom: 0 !important; /* overwrite bootstrap stuff */
+  font-size: 0.85em;
+}

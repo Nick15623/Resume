@@ -1,0 +1,19 @@
+<div *ngIf="Config" class="form-cntr">
+  <div *ngIf="Config?.Title"><h4>{{ Config.Title }}</h4></div>
+  <p *ngIf="Config?.Description" class="ms-2">{{ Config.Description }}</p>
+
+  <div *ngFor="let formRow of Config.FormRows" class="row">
+    <div *ngFor="let group of formRow.FormRowGroups; let i = index" class="{{ getRowColWidth(formRow,i) }}">
+      <div *ngIf="group != null" class="form-group">
+        <easy-input *ngIf="group.Type == GroupType.Input" [RowGroup]="group" (onLoad)="onLoad($event)" (onChange)="onChange($event)"></easy-input>
+        <easy-select *ngIf="group.Type == GroupType.Select" [RowGroup]="group" (onLoad)="onLoad($event)" (onChange)="onChange($event)"></easy-select>
+        <easy-textarea *ngIf="group.Type == GroupType.Textarea" [RowGroup]="group" (onLoad)="onLoad($event)" (onChange)="onChange($event)"></easy-textarea>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-btns-cntr {{ getButtonAlignment() }}">
+    <button *ngIf="Config?.ShowClearButton" class="btn btn-secondary me-2" (click)="clear()">{{ Config?.ClearButtonText ? Config.ClearButtonText : "Clear" }}</button>
+    <button *ngIf="Config?.ShowSubmitButton" class="btn btn-primary" (click)="submit()">{{ Config?.SubmitButtonText ? Config.SubmitButtonText : "Submit" }}</button>
+  </div>
+</div>

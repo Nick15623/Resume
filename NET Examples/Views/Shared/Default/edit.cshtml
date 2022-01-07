@@ -1,0 +1,14 @@
+﻿@using Schooldesk.ViewModels
+@model PageViewModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Html.HiddenFor(vm => vm.ContentPageId)
+
+@Styles.Render("~/Content/Editor")
+
+<editor-root allow-error></editor-root>
+
+@Scripts.Render("~/bundles/Editor")
+

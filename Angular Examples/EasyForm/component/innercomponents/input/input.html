@@ -1,0 +1,28 @@
+
+<div [class.checkbox-cntr]="InputElement?.Type == InputType.Checkbox" [class.form-switch]="InputElement?.CheckboxAsToggleSwitch">
+  <label *ngIf="ShowLabelBefore" for="{{ Id }}" class="{{ getLabelClass() }}">{{ RowGroup.Label }}</label>
+  <input *ngIf="InputElement && Control"
+    type="{{ getType() }}"
+    id="{{ Id }}"
+    class="{{ getInputClass() }}"
+    placeholder="{{ (InputElement?.Placeholder ? InputElement.Placeholder : '') }}"
+
+    [class.invalid]="Control?.invalid && (Control?.dirty || Control?.touched)"
+
+    [value]="InputElement?.Value ? InputElement.Value : ''"
+    [title]="InputElement?.Title ? InputElement.Title : ''"
+
+    [attr.name]="InputElement.Name"
+    [attr.disabled]="InputElement?.Disabled"
+    [attr.readonly]="InputElement?.Readonly"
+
+    [formControl]="Control"
+
+    (click)="click($event.target)"
+    (change)="doChange()"
+    (blur)="doChange()"
+    (keyup)="doChange()"
+  />
+  <label *ngIf="ShowLabelAfter" for="{{ Id }}" class="{{ getLabelClass() }}">{{ RowGroup.Label }}</label>
+</div>
+<easy-validation [Validators]="RowGroup?.Validators" [Control]="Control"></easy-validation>

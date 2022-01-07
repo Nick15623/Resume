@@ -1,0 +1,23 @@
+
+<div *ngIf="Config">
+  <div class="modal-cntr" [class.intro-animation]="ShowIntro" [class.outro-animation]="ShowOutro">
+    <div class="card {{ sizeClass }}">
+
+      <div *ngIf="Type == ModalTypeEnum.Alert">
+        <modal-alert [Config]="Config" (onClose)="close()"></modal-alert>
+      </div>
+      <div *ngIf="Type == ModalTypeEnum.Confirmation">
+        <modal-confirmation [Config]="Config" (onClose)="close()" (onConfirm)="confirm()"></modal-confirmation>
+      </div>
+      <div *ngIf="Type == ModalTypeEnum.CustomComponent">
+        <modal-custom-component [Config]="Config" (onClose)="close()"></modal-custom-component>
+      </div>
+
+    </div>
+    <div *ngIf="Config.FuzzyBackground" class="dark-overlay"></div>
+    <div *ngIf="Config.CloseOnOuterClick" class="click-overlay" (click)="close()"></div>
+  </div>
+</div>
+
+
+
