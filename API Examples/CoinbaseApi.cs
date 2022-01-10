@@ -1,4 +1,4 @@
-﻿using Backend.Api;
+using Backend.Api;
 using Backend.Credentials;
 using Models.Backend;
 using Models.Backend.Coinbase;
@@ -18,12 +18,13 @@ namespace Backend.Coinbase
 {
     public class CoinbaseApi : IExternalIntegration
     {
-        private CoinbaseApiCredentials _Credentials;
-
         private static CoinbaseApiHelper _Helper = new CoinbaseApiHelper();
+        private CoinbaseApiCredentials _Credentials;
+        private bool _SandboxMode = false;
         
-        public CoinbaseApi()
+        public CoinbaseApi(bool sandboxMode = false)
         {
+            _SandboxMode = sandboxMode;
             GetCredentials();
         }
 
@@ -34,7 +35,7 @@ namespace Backend.Coinbase
             var response = new MethodResponse<IEnumerable<Account>>();
             using (var api = new ApiClient())
             {
-                var uri = new Uri(CoinbaseUrls.Url[CoinbaseUrl.GetAllAccountsForProfile]);
+                var uri = new Uri(CoinbaseUrls.Get(CoinbaseUrl.GetAllAccountsForProfile, _SandboxMode));
                 var headers = _Helper.GetHeaders(_Credentials, DateTime.Now, ApiRequestType.GET.ToString(), uri.AbsolutePath);
                 response = await api.GetAsync<IEnumerable<Account>>(uri.ToString(), headers);
             }
@@ -47,7 +48,7 @@ namespace Backend.Coinbase
             {
                 using (var api = new ApiClient())
                 {
-                    var uri = new Uri(CoinbaseUrls.Url[CoinbaseUrl.GetAccountById].WithId(account_id));
+                    var uri = new Uri(CoinbaseUrls.Get(CoinbaseUrl.GetAccountById, _SandboxMode).WithId(account_id));
                     var headers = _Helper.GetHeaders(_Credentials, DateTime.Now, ApiRequestType.GET.ToString(), uri.AbsolutePath);
                     response = await api.GetAsync<Account>(uri.ToString(), headers);
                 }
@@ -65,7 +66,7 @@ namespace Backend.Coinbase
             {
                 using (var api = new ApiClient())
                 {
-                    var uri = new Uri(CoinbaseUrls.Url[CoinbaseUrl.GetAccountHolds].WithId(account_id));
+                    var uri = new Uri(CoinbaseUrls.Get(CoinbaseUrl.GetAccountHolds, _SandboxMode).WithId(account_id));
                     var headers = _Helper.GetHeaders(_Credentials, DateTime.Now, ApiRequestType.GET.ToString(), uri.AbsolutePath);
                     response = await api.GetAsync<IEnumerable<AccountHold>>(uri.ToString(), headers);
                 }
@@ -83,7 +84,7 @@ namespace Backend.Coinbase
             {
                 using (var api = new ApiClient())
                 {
-                    var uri = new Uri(CoinbaseUrls.Url[CoinbaseUrl.GetAccountLedger].WithId(account_id));
+                    var uri = new Uri(CoinbaseUrls.Get(CoinbaseUrl.GetAccountLedger, _SandboxMode).WithId(account_id));
                     var headers = _Helper.GetHeaders(_Credentials, DateTime.Now, ApiRequestType.GET.ToString(), uri.AbsolutePath);
                     response = await api.GetAsync<IEnumerable<AccountLedger>>(uri.ToString(), headers);
                 }
@@ -101,7 +102,7 @@ namespace Backend.Coinbase
             {
                 using (var api = new ApiClient())
                 {
-                    var uri = new Uri(CoinbaseUrls.Url[CoinbaseUrl.GetAccountLedger].WithId(account_id));
+                    var uri = new Uri(CoinbaseUrls.Get(CoinbaseUrl.GetAccountLedger, _SandboxMode).WithId(account_id));
                     var headers = _Helper.GetHeaders(_Credentials, DateTime.Now, ApiRequestType.GET.ToString(), uri.AbsolutePath);
                     response = await api.GetAsync<IEnumerable<AccountTransfer>>(uri.ToString(), headers);
                 }
@@ -121,7 +122,7 @@ namespace Backend.Coinbase
             var response = new MethodResponse<IEnumerable<Wallet>>();
             using (var api = new ApiClient())
             {
-                var uri = new Uri(CoinbaseUrls.Url[CoinbaseUrl.GetAllWallets]);
+                var uri = new Uri(CoinbaseUrls.Get(CoinbaseUrl.GetAllWallets, _SandboxMode));
                 var headers = _Helper.GetHeaders(_Credentials, DateTime.Now, ApiRequestType.GET.ToString(), uri.AbsolutePath);
                 response = await api.GetAsync<IEnumerable<Wallet>>(uri.ToString(), headers);
             }
@@ -132,7 +133,7 @@ namespace Backend.Coinbase
             var response = new MethodResponse<CryptoAddress>();
             using (var api = new ApiClient())
             {
-                var uri = new Uri(CoinbaseUrls.Url[CoinbaseUrl.GenerateCryptoAddress].WithId(account_id));
+                var uri = new Uri(CoinbaseUrls.Get(CoinbaseUrl.GenerateCryptoAddress, _SandboxMode).WithId(account_id));
                 var headers = _Helper.GetHeaders(_Credentials, DateTime.Now, ApiRequestType.POST.ToString(), uri.AbsolutePath);
                 response = await api.PostAsync<CryptoAddress>(uri.ToString(), null, headers);
             }
@@ -147,7 +148,7 @@ namespace Backend.Coinbase
             var response = new MethodResponse<ConvertCurrencyResponse>();
             using (var api = new ApiClient())
             {
-                var uri = new Uri(CoinbaseUrls.Url[CoinbaseUrl.ConvertCurrency]);
+                var uri = new Uri(CoinbaseUrls.Get(CoinbaseUrl.ConvertCurrency, _SandboxMode));
                 var headers = _Helper.GetHeaders(_Credentials, DateTime.Now, ApiRequestType.POST.ToString(), uri.AbsolutePath, request);
                 response = await api.PostAsync<ConvertCurrencyResponse>(uri.ToString(), null, headers);
             }
@@ -158,7 +159,7 @@ namespace Backend.Coinbase
             var response = new MethodResponse<Conversion>();
             using (var api = new ApiClient())
             {
-                var uri = new Uri(CoinbaseUrls.Url[CoinbaseUrl.GetConversion].WithId(conversion_id));
+                var uri = new Uri(CoinbaseUrls.Get(CoinbaseUrl.GetConversion, _SandboxMode).WithId(conversion_id));
                 var headers = _Helper.GetHeaders(_Credentials, DateTime.Now, ApiRequestType.GET.ToString(), uri.AbsolutePath);
                 response = await api.GetAsync<Conversion>(uri.ToString(), headers);
             }
@@ -173,7 +174,7 @@ namespace Backend.Coinbase
             var response = new MethodResponse<IEnumerable<Currency>>();
             using (var api = new ApiClient())
             {
-                var uri = new Uri(CoinbaseUrls.Url[CoinbaseUrl.GetAllKnownCurrencies]);
+                var uri = new Uri(CoinbaseUrls.Get(CoinbaseUrl.GetAllKnownCurrencies, _SandboxMode));
                 var headers = _Helper.GetHeaders(_Credentials, DateTime.Now, ApiRequestType.GET.ToString(), uri.AbsolutePath);
                 response = await api.GetAsync<IEnumerable<Currency>>(uri.ToString(), headers);
             }
@@ -184,7 +185,7 @@ namespace Backend.Coinbase
             var response = new MethodResponse<Currency>();
             using (var api = new ApiClient())
             {
-                var uri = new Uri(CoinbaseUrls.Url[CoinbaseUrl.GetCurrency].WithId(currency_id));
+                var uri = new Uri(CoinbaseUrls.Get(CoinbaseUrl.GetCurrency, _SandboxMode).WithId(currency_id));
                 var headers = _Helper.GetHeaders(_Credentials, DateTime.Now, ApiRequestType.GET.ToString(), uri.AbsolutePath);
                 response = await api.GetAsync<Currency>(uri.ToString(), headers);
             }
@@ -199,7 +200,7 @@ namespace Backend.Coinbase
             var response = new MethodResponse<DepositFromAccountResponse>();
             using (var api = new ApiClient())
             {
-                var uri = new Uri(CoinbaseUrls.Url[CoinbaseUrl.DepositFromAccount]);
+                var uri = new Uri(CoinbaseUrls.Get(CoinbaseUrl.DepositFromAccount, _SandboxMode));
                 var headers = _Helper.GetHeaders(_Credentials, DateTime.Now, ApiRequestType.POST.ToString(), uri.AbsolutePath, request);
                 response = await api.PostAsync<DepositFromAccountResponse>(uri.ToString(), null, headers);
             }
@@ -210,7 +211,7 @@ namespace Backend.Coinbase
             var response = new MethodResponse<DepositFromPayMethodResponse>();
             using (var api = new ApiClient())
             {
-                var uri = new Uri(CoinbaseUrls.Url[CoinbaseUrl.DepositFromPaymentMethod]);
+                var uri = new Uri(CoinbaseUrls.Get(CoinbaseUrl.DepositFromPaymentMethod, _SandboxMode));
                 var headers = _Helper.GetHeaders(_Credentials, DateTime.Now, ApiRequestType.POST.ToString(), uri.AbsolutePath, request);
                 response = await api.PostAsync<DepositFromPayMethodResponse>(uri.ToString(), null, headers);
             }
@@ -221,7 +222,7 @@ namespace Backend.Coinbase
             var response = new MethodResponse<IEnumerable<PaymentMethod>>();
             using (var api = new ApiClient())
             {
-                var uri = new Uri(CoinbaseUrls.Url[CoinbaseUrl.GetAllPaymentMethods]);
+                var uri = new Uri(CoinbaseUrls.Get(CoinbaseUrl.GetAllPaymentMethods, _SandboxMode));
                 var headers = _Helper.GetHeaders(_Credentials, DateTime.Now, ApiRequestType.GET.ToString(), uri.AbsolutePath);
                 response = await api.GetAsync<IEnumerable<PaymentMethod>>(uri.ToString(), headers);
             }
@@ -232,7 +233,7 @@ namespace Backend.Coinbase
             var response = new MethodResponse<IEnumerable<AccountTransfer>>();
             using (var api = new ApiClient())
             {
-                var uri = new Uri(CoinbaseUrls.Url[CoinbaseUrl.GetAllTransfers]);
+                var uri = new Uri(CoinbaseUrls.Get(CoinbaseUrl.GetAllTransfers, _SandboxMode));
                 var headers = _Helper.GetHeaders(_Credentials, DateTime.Now, ApiRequestType.GET.ToString(), uri.AbsolutePath);
                 response = await api.GetAsync<IEnumerable<AccountTransfer>>(uri.ToString(), headers);
             }
@@ -245,7 +246,7 @@ namespace Backend.Coinbase
             {
                 using (var api = new ApiClient())
                 {
-                    var uri = new Uri(CoinbaseUrls.Url[CoinbaseUrl.GetTransfer].WithId(transfer_id));
+                    var uri = new Uri(CoinbaseUrls.Get(CoinbaseUrl.GetTransfer, _SandboxMode).WithId(transfer_id));
                     var headers = _Helper.GetHeaders(_Credentials, DateTime.Now, ApiRequestType.GET.ToString(), uri.AbsolutePath);
                     response = await api.GetAsync<AccountTransfer>(uri.ToString(), headers);
                 }
@@ -261,7 +262,7 @@ namespace Backend.Coinbase
             var response = new MethodResponse<WithdrawToAccountResponse>();
             using (var api = new ApiClient())
             {
-                var uri = new Uri(CoinbaseUrls.Url[CoinbaseUrl.WithdrawToAccount]);
+                var uri = new Uri(CoinbaseUrls.Get(CoinbaseUrl.WithdrawToAccount, _SandboxMode));
                 var headers = _Helper.GetHeaders(_Credentials, DateTime.Now, ApiRequestType.POST.ToString(), uri.AbsolutePath, request);
                 response = await api.PostAsync<WithdrawToAccountResponse>(uri.ToString(), null, headers);
             }
@@ -272,7 +273,7 @@ namespace Backend.Coinbase
             var response = new MethodResponse<WithdrawToAddressResponse>();
             using (var api = new ApiClient())
             {
-                var uri = new Uri(CoinbaseUrls.Url[CoinbaseUrl.WithdrawToAddress]);
+                var uri = new Uri(CoinbaseUrls.Get(CoinbaseUrl.WithdrawToAddress, _SandboxMode));
                 var headers = _Helper.GetHeaders(_Credentials, DateTime.Now, ApiRequestType.POST.ToString(), uri.AbsolutePath, request);
                 response = await api.PostAsync<WithdrawToAddressResponse>(uri.ToString(), null, headers);
             }
@@ -283,7 +284,7 @@ namespace Backend.Coinbase
             var response = new MethodResponse<WithdrawToPayMethodResponse>();
             using (var api = new ApiClient())
             {
-                var uri = new Uri(CoinbaseUrls.Url[CoinbaseUrl.WithdrawToPaymentMethod]);
+                var uri = new Uri(CoinbaseUrls.Get(CoinbaseUrl.WithdrawToPaymentMethod, _SandboxMode));
                 var headers = _Helper.GetHeaders(_Credentials, DateTime.Now, ApiRequestType.POST.ToString(), uri.AbsolutePath, request);
                 response = await api.PostAsync<WithdrawToPayMethodResponse>(uri.ToString(), null, headers);
             }
@@ -298,7 +299,7 @@ namespace Backend.Coinbase
             var response = new MethodResponse<IEnumerable<Fee>>();
             using (var api = new ApiClient())
             {
-                var uri = new Uri(CoinbaseUrls.Url[CoinbaseUrl.GetFees]);
+                var uri = new Uri(CoinbaseUrls.Get(CoinbaseUrl.GetFees, _SandboxMode));
                 var headers = _Helper.GetHeaders(_Credentials, DateTime.Now, ApiRequestType.GET.ToString(), uri.AbsolutePath);
                 response = await api.GetAsync<IEnumerable<Fee>>(uri.ToString(), headers);
             }
@@ -309,7 +310,7 @@ namespace Backend.Coinbase
             var response = new MethodResponse<FeeEstimate>();
             using (var api = new ApiClient())
             {
-                var uri = new Uri($"{CoinbaseUrls.Url[CoinbaseUrl.GetFeeEstimateForWithdrawal]}?currency={currency}&crypto_address={address}");
+                var uri = new Uri($"{CoinbaseUrls.Get(CoinbaseUrl.GetFeeEstimateForWithdrawal, _SandboxMode)}?currency={currency}&crypto_address={address}");
                 var headers = _Helper.GetHeaders(_Credentials, DateTime.Now, ApiRequestType.GET.ToString(), uri.AbsolutePath);
                 response = await api.GetAsync<FeeEstimate>(uri.ToString(), headers);
             }
@@ -324,7 +325,7 @@ namespace Backend.Coinbase
             var response = new MethodResponse<IEnumerable<Fill>>();
             using (var api = new ApiClient())
             {
-                var uri = new Uri(CoinbaseUrls.Url[CoinbaseUrl.GetAllFills]);
+                var uri = new Uri(CoinbaseUrls.Get(CoinbaseUrl.GetAllFills, _SandboxMode));
                 var headers = _Helper.GetHeaders(_Credentials, DateTime.Now, ApiRequestType.GET.ToString(), uri.AbsolutePath);
                 response = await api.GetAsync<IEnumerable<Fill>>(uri.ToString(), headers);
             }
@@ -335,7 +336,7 @@ namespace Backend.Coinbase
             var response = new MethodResponse<IEnumerable<Order>>();
             using (var api = new ApiClient())
             {
-                var uri = new Uri(CoinbaseUrls.Url[CoinbaseUrl.GetAllOrders]);
+                var uri = new Uri(CoinbaseUrls.Get(CoinbaseUrl.GetAllOrders, _SandboxMode));
                 var headers = _Helper.GetHeaders(_Credentials, DateTime.Now, ApiRequestType.GET.ToString(), uri.AbsolutePath);
                 response = await api.GetAsync<IEnumerable<Order>>(uri.ToString(), headers);
             }
@@ -346,8 +347,8 @@ namespace Backend.Coinbase
             var response = new MethodResponse<IEnumerable<string>>();
             using (var api = new ApiClient())
             {
-                var uri = new Uri(CoinbaseUrls.Url[CoinbaseUrl.CancelAllOrders]);
-                var headers = _Helper.GetHeaders(_Credentials, DateTime.Now, ApiRequestType.GET.ToString(), uri.AbsolutePath);
+                var uri = new Uri(CoinbaseUrls.Get(CoinbaseUrl.CancelAllOrders, _SandboxMode));
+                var headers = _Helper.GetHeaders(_Credentials, DateTime.Now, ApiRequestType.DELETE.ToString(), uri.AbsolutePath);
                 response = await api.DeleteAsync<IEnumerable<string>>(uri.ToString(), headers);
             }
             return response;
@@ -357,8 +358,8 @@ namespace Backend.Coinbase
             var response = new MethodResponse<CreateNewOrderResponse>();
             using (var api = new ApiClient())
             {
-                var uri = new Uri(CoinbaseUrls.Url[CoinbaseUrl.CreateNewOrder]);
-                var headers = _Helper.GetHeaders(_Credentials, DateTime.Now, ApiRequestType.GET.ToString(), uri.AbsolutePath, request);
+                var uri = new Uri(CoinbaseUrls.Get(CoinbaseUrl.CreateNewOrder, _SandboxMode));
+                var headers = _Helper.GetHeaders(_Credentials, DateTime.Now, ApiRequestType.POST.ToString(), uri.AbsolutePath, request);
                 response = await api.PostAsync<CreateNewOrderResponse>(uri.ToString(), headers);
             }
             return response;
@@ -368,7 +369,7 @@ namespace Backend.Coinbase
             var response = new MethodResponse<Order>();
             using (var api = new ApiClient())
             {
-                var uri = new Uri($"{CoinbaseUrls.Url[CoinbaseUrl.GetOrder].WithId(order_id)}");
+                var uri = new Uri($"{CoinbaseUrls.Get(CoinbaseUrl.GetOrder, _SandboxMode).WithId(order_id)}");
                 var headers = _Helper.GetHeaders(_Credentials, DateTime.Now, ApiRequestType.GET.ToString(), uri.AbsolutePath);
                 response = await api.GetAsync<Order>(uri.ToString(), headers);
             }
@@ -379,8 +380,8 @@ namespace Backend.Coinbase
             var response = new MethodResponse<string>();
             using (var api = new ApiClient())
             {
-                var uri = new Uri($"{CoinbaseUrls.Url[CoinbaseUrl.CancelOrder].WithId(order_id)}");
-                var headers = _Helper.GetHeaders(_Credentials, DateTime.Now, ApiRequestType.GET.ToString(), uri.AbsolutePath);
+                var uri = new Uri($"{CoinbaseUrls.Get(CoinbaseUrl.CancelOrder, _SandboxMode).WithId(order_id)}");
+                var headers = _Helper.GetHeaders(_Credentials, DateTime.Now, ApiRequestType.DELETE.ToString(), uri.AbsolutePath);
                 response = await api.DeleteAsync<string>(uri.ToString(), headers);
             }
             return response;
@@ -394,7 +395,7 @@ namespace Backend.Coinbase
             var response = new MethodResponse<SignedPrice>();
             using (var api = new ApiClient())
             {
-                var uri = new Uri(CoinbaseUrls.Url[CoinbaseUrl.GetSignedPrices]);
+                var uri = new Uri(CoinbaseUrls.Get(CoinbaseUrl.GetSignedPrices, _SandboxMode));
                 var headers = _Helper.GetHeaders(_Credentials, DateTime.Now, ApiRequestType.GET.ToString(), uri.AbsolutePath);
                 response = await api.GetAsync<SignedPrice>(uri.ToString(), headers);
             }
@@ -409,7 +410,7 @@ namespace Backend.Coinbase
             var response = new MethodResponse<IEnumerable<Product>>();
             using (var api = new ApiClient())
             {
-                var uri = new Uri(CoinbaseUrls.Url[CoinbaseUrl.GetAllKnownProducts]);
+                var uri = new Uri(CoinbaseUrls.Get(CoinbaseUrl.GetAllKnownProducts, _SandboxMode));
                 var headers = _Helper.GetHeaders(_Credentials, DateTime.Now, ApiRequestType.GET.ToString(), uri.AbsolutePath);
                 response = await api.GetAsync<IEnumerable<Product>>(uri.ToString(), headers);
             }
@@ -420,7 +421,7 @@ namespace Backend.Coinbase
             var response = new MethodResponse<Product>();
             using (var api = new ApiClient())
             {
-                var uri = new Uri(CoinbaseUrls.Url[CoinbaseUrl.GetProduct].WithId(product_id));
+                var uri = new Uri(CoinbaseUrls.Get(CoinbaseUrl.GetProduct, _SandboxMode).WithId(product_id));
                 var headers = _Helper.GetHeaders(_Credentials, DateTime.Now, ApiRequestType.GET.ToString(), uri.AbsolutePath);
                 response = await api.GetAsync<Product>(uri.ToString(), headers);
             }
@@ -431,7 +432,7 @@ namespace Backend.Coinbase
             var response = new MethodResponse<ProductBook>();
             using (var api = new ApiClient())
             {
-                var uri = new Uri(CoinbaseUrls.Url[CoinbaseUrl.GetProductBook].WithId(product_id));
+                var uri = new Uri(CoinbaseUrls.Get(CoinbaseUrl.GetProductBook, _SandboxMode).WithId(product_id));
                 var headers = _Helper.GetHeaders(_Credentials, DateTime.Now, ApiRequestType.GET.ToString(), uri.AbsolutePath);
                 response = await api.GetAsync<ProductBook>(uri.ToString(), headers);
             }
@@ -442,7 +443,7 @@ namespace Backend.Coinbase
             var response = new MethodResponse<IEnumerable<object>>();
             using (var api = new ApiClient())
             {
-                var uri = new Uri(CoinbaseUrls.Url[CoinbaseUrl.GetProductCandles].WithId(product_id));
+                var uri = new Uri(CoinbaseUrls.Get(CoinbaseUrl.GetProductCandles, _SandboxMode).WithId(product_id));
                 var headers = _Helper.GetHeaders(_Credentials, DateTime.Now, ApiRequestType.GET.ToString(), uri.AbsolutePath);
                 response = await api.GetAsync<IEnumerable<object>>(uri.ToString(), headers);
             }
@@ -453,7 +454,7 @@ namespace Backend.Coinbase
             var response = new MethodResponse<ProductStats>();
             using (var api = new ApiClient())
             {
-                var uri = new Uri(CoinbaseUrls.Url[CoinbaseUrl.GetProductStats].WithId(product_id));
+                var uri = new Uri(CoinbaseUrls.Get(CoinbaseUrl.GetProductStats, _SandboxMode).WithId(product_id));
                 var headers = _Helper.GetHeaders(_Credentials, DateTime.Now, ApiRequestType.GET.ToString(), uri.AbsolutePath);
                 response = await api.GetAsync<ProductStats>(uri.ToString(), headers);
             }
@@ -464,7 +465,7 @@ namespace Backend.Coinbase
             var response = new MethodResponse<ProductTicker>();
             using (var api = new ApiClient())
             {
-                var uri = new Uri(CoinbaseUrls.Url[CoinbaseUrl.GetProductTicker].WithId(product_id));
+                var uri = new Uri(CoinbaseUrls.Get(CoinbaseUrl.GetProductTicker, _SandboxMode).WithId(product_id));
                 var headers = _Helper.GetHeaders(_Credentials, DateTime.Now, ApiRequestType.GET.ToString(), uri.AbsolutePath);
                 response = await api.GetAsync<ProductTicker>(uri.ToString(), headers);
             }
@@ -475,7 +476,7 @@ namespace Backend.Coinbase
             var response = new MethodResponse<IEnumerable<ProductTrade>>();
             using (var api = new ApiClient())
             {
-                var uri = new Uri(CoinbaseUrls.Url[CoinbaseUrl.GetProductTrades].WithId(product_id));
+                var uri = new Uri(CoinbaseUrls.Get(CoinbaseUrl.GetProductTrades, _SandboxMode).WithId(product_id));
                 var headers = _Helper.GetHeaders(_Credentials, DateTime.Now, ApiRequestType.GET.ToString(), uri.AbsolutePath);
                 response = await api.GetAsync<IEnumerable<ProductTrade>>(uri.ToString(), headers);
             }
@@ -490,7 +491,7 @@ namespace Backend.Coinbase
             var response = new MethodResponse<IEnumerable<Profile>>();
             using (var api = new ApiClient())
             {
-                var uri = new Uri(CoinbaseUrls.Url[CoinbaseUrl.GetProfiles]);
+                var uri = new Uri(CoinbaseUrls.Get(CoinbaseUrl.GetProfiles, _SandboxMode));
                 var headers = _Helper.GetHeaders(_Credentials, DateTime.Now, ApiRequestType.GET.ToString(), uri.AbsolutePath);
                 response = await api.GetAsync<IEnumerable<Profile>>(uri.ToString(), headers);
             }
@@ -501,8 +502,8 @@ namespace Backend.Coinbase
             var response = new MethodResponse<CreateProfileResponse>();
             using (var api = new ApiClient())
             {
-                var uri = new Uri(CoinbaseUrls.Url[CoinbaseUrl.CreateProfile]);
-                var headers = _Helper.GetHeaders(_Credentials, DateTime.Now, ApiRequestType.GET.ToString(), uri.AbsolutePath, request);
+                var uri = new Uri(CoinbaseUrls.Get(CoinbaseUrl.CreateProfile, _SandboxMode));
+                var headers = _Helper.GetHeaders(_Credentials, DateTime.Now, ApiRequestType.POST.ToString(), uri.AbsolutePath, request);
                 response = await api.PostAsync<CreateProfileResponse>(uri.ToString(), headers);
             }
             return response;
@@ -512,8 +513,8 @@ namespace Backend.Coinbase
             var response = new MethodResponse<TransferFundsBetweenProfilesResponse>();
             using (var api = new ApiClient())
             {
-                var uri = new Uri(CoinbaseUrls.Url[CoinbaseUrl.TransferFundsBetweenProfiles]);
-                var headers = _Helper.GetHeaders(_Credentials, DateTime.Now, ApiRequestType.GET.ToString(), uri.AbsolutePath, request);
+                var uri = new Uri(CoinbaseUrls.Get(CoinbaseUrl.TransferFundsBetweenProfiles, _SandboxMode));
+                var headers = _Helper.GetHeaders(_Credentials, DateTime.Now, ApiRequestType.POST.ToString(), uri.AbsolutePath, request);
                 response = await api.PostAsync<TransferFundsBetweenProfilesResponse>(uri.ToString(), headers);
             }
             return response;
@@ -523,7 +524,7 @@ namespace Backend.Coinbase
             var response = new MethodResponse<Profile>();
             using (var api = new ApiClient())
             {
-                var uri = new Uri(CoinbaseUrls.Url[CoinbaseUrl.GetProfileById].WithId(profile_id));
+                var uri = new Uri(CoinbaseUrls.Get(CoinbaseUrl.GetProfileById, _SandboxMode).WithId(profile_id));
                 var headers = _Helper.GetHeaders(_Credentials, DateTime.Now, ApiRequestType.GET.ToString(), uri.AbsolutePath);
                 response = await api.GetAsync<Profile>(uri.ToString(), headers);
             }
@@ -535,8 +536,8 @@ namespace Backend.Coinbase
             using (var api = new ApiClient())
             {
                 var profile_id = request.profile_id;
-                var uri = new Uri(CoinbaseUrls.Url[CoinbaseUrl.RenameProfile].WithId(profile_id));
-                var headers = _Helper.GetHeaders(_Credentials, DateTime.Now, ApiRequestType.GET.ToString(), uri.AbsolutePath, request);
+                var uri = new Uri(CoinbaseUrls.Get(CoinbaseUrl.RenameProfile, _SandboxMode).WithId(profile_id));
+                var headers = _Helper.GetHeaders(_Credentials, DateTime.Now, ApiRequestType.PUT.ToString(), uri.AbsolutePath, request);
                 response = await api.PutAsync<RenameProfileResponse>(uri.ToString(), headers);
             }
             return response;
@@ -547,18 +548,77 @@ namespace Backend.Coinbase
             using (var api = new ApiClient())
             {
                 var profile_id = request.profile_id;
-                var uri = new Uri(CoinbaseUrls.Url[CoinbaseUrl.DelateProfile].WithId(profile_id));
-                var headers = _Helper.GetHeaders(_Credentials, DateTime.Now, ApiRequestType.GET.ToString(), uri.AbsolutePath, request);
+                var uri = new Uri(CoinbaseUrls.Get(CoinbaseUrl.DelateProfile, _SandboxMode).WithId(profile_id));
+                var headers = _Helper.GetHeaders(_Credentials, DateTime.Now, ApiRequestType.PUT.ToString(), uri.AbsolutePath, request);
                 response = await api.PutAsync<DeleteProfileResponse>(uri.ToString(), headers);
             }
             return response;
         }
         #endregion
-        
+
+        // Reports Apis
+        #region Reports
+        public async Task<MethodResponse<IEnumerable<Report>>> GetAllReports()
+        {
+            var response = new MethodResponse<IEnumerable<Report>>();
+            using (var api = new ApiClient())
+            {
+                var uri = new Uri(CoinbaseUrls.Get(CoinbaseUrl.GetAllReports, _SandboxMode));
+                var headers = _Helper.GetHeaders(_Credentials, DateTime.Now, ApiRequestType.GET.ToString(), uri.AbsolutePath);
+                response = await api.GetAsync<IEnumerable<Report>>(uri.ToString(), headers);
+            }
+            return response;
+        }
+        public async Task<MethodResponse<CreateReportResponse>> CreateReport(CreateReportRequest request)
+        {
+            var response = new MethodResponse<CreateReportResponse>();
+            using (var api = new ApiClient())
+            {
+                var uri = new Uri(CoinbaseUrls.Get(CoinbaseUrl.CreateReport, _SandboxMode));
+                var headers = _Helper.GetHeaders(_Credentials, DateTime.Now, ApiRequestType.POST.ToString(), uri.AbsolutePath, request);
+                response = await api.PostAsync<CreateReportResponse>(uri.ToString(), headers);
+            }
+            return response;
+        }
+        public async Task<MethodResponse<Report>> GetReportById(string report_id)
+        {
+            var response = new MethodResponse<Report>();
+            using (var api = new ApiClient())
+            {
+                var uri = new Uri(CoinbaseUrls.Get(CoinbaseUrl.GetReportById, _SandboxMode).WithId(report_id));
+                var headers = _Helper.GetHeaders(_Credentials, DateTime.Now, ApiRequestType.GET.ToString(), uri.AbsolutePath);
+                response = await api.GetAsync<Report>(uri.ToString(), headers);
+            }
+            return response;
+        }
+        #endregion
+
+        // Users Apis
+        #region Users
+        public async Task<MethodResponse<UserExchangeLimit>> GetUserExchangeLimits(string user_id)
+        {
+            var response = new MethodResponse<UserExchangeLimit>();
+            using (var api = new ApiClient())
+            {
+                var uri = new Uri(CoinbaseUrls.Get(CoinbaseUrl.GetUserExchangeLimits, _SandboxMode).WithId(user_id));
+                var headers = _Helper.GetHeaders(_Credentials, DateTime.Now, ApiRequestType.GET.ToString(), uri.AbsolutePath);
+                response = await api.GetAsync<UserExchangeLimit>(uri.ToString(), headers);
+            }
+            return response;
+        }
+        #endregion
+
         public IExternalCredentials GetCredentials()
         {
             var credentialsHelper = new CredentialsHelper();
-            _Credentials = credentialsHelper.GetCredentials<CoinbaseApiCredentials>();
+            if (_SandboxMode == true)
+            {
+                _Credentials = credentialsHelper.GetCredentials<CoinbaseSandboxApiCredentials>();
+            }
+            else
+            {
+                _Credentials = credentialsHelper.GetCredentials<CoinbaseApiCredentials>();
+            }
             return _Credentials;
         }
     }
